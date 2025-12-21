@@ -1,0 +1,37 @@
+
+[terminal.shell]
+program = "/usr/bin/zsh"
+args = ["-l"]
+
+[keyboard]
+bindings = [
+  # Ctrl+C = Copy
+  { key = "C", mods = "Control", action = "Copy" },
+
+  # Ctrl+V = Paste
+  { key = "V", mods = "Control", action = "Paste" },
+
+  # Ctrl+Shift+C = send real Ctrl-C (^C) => SIGINT
+  { key = "C", mods = "Control|Shift", chars = "\u0003" },
+]
+
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/afterglow.toml"
+]
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Bold Italic"

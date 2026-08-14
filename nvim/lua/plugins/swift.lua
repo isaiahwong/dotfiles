@@ -13,31 +13,31 @@ return {
             },
           },
           filetypes = { "swift", "objective-c", "objective-cpp" },
-          root_dir = require("lspconfig.util").root_pattern("Package.swift", ".git"),
+          -- buildServer.json first, else the git root wins and the index is never found
+          root_markers = { "buildServer.json", "Package.swift", ".git" },
         },
       },
     },
   },
 
-  -- Swift syntax highlighting via Treesitter
+  -- swift.vim handles highlighting; the treesitter parser needs nvim 0.12+ to build
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "swift" })
+        opts.ensure_installed = vim.tbl_filter(function(lang)
+          return lang ~= "swift"
+        end, opts.ensure_installed)
       end
     end,
   },
 
-  -- Enhanced Swift support
   {
-    "wojciech-kulik/xcodebuild.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "MunifTanjim/nui.nvim",
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        swift = { "swiftformat" },
+      },
     },
-    config = function()
-      require("xcodebuild").setup()
-    end,
   },
 }

@@ -15,3 +15,15 @@ vim.g.lazyvim_lsp_inlay_hints = false
 
 -- For markdown
 vim.opt.conceallevel = 0
+
+vim.opt.clipboard = "unnamedplus"
+
+-- over ssh nvim skips OSC 52 unless SSH_TTY is set, which tmux drops; force it
+if vim.env.SSH_CONNECTION or vim.env.SSH_TTY then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+    paste = { ["+"] = osc52.paste("+"), ["*"] = osc52.paste("*") },
+  }
+end
